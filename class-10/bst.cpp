@@ -81,6 +81,61 @@ Node* insert(Node *root, int x) {
     return root;
 }
 
+
+int getSmallest(Node *root) {
+    if (root == NULL) {
+        return INT_MAX;
+    }
+    while (root->left != NULL) {
+        root = root->left;
+    }
+    return root->data;
+}
+
+/**
+ * TC: O(H)
+ * Aux space: O(H)
+ * SC: O(n)
+*/
+
+// This function takes the root node as input and returns the modified root after deleting x.
+Node* deleteNode(Node* root, int x) {
+
+    // base-case
+    if (root == NULL) {
+        return NULL;
+    }
+
+    if (root->data == x) {
+        // perform the deletion logic
+
+        // case-1: root does not have any child node
+        if (root->left == NULL and root->right == NULL) {
+            return NULL;
+        }
+
+        // case-2: root has exactly one child node
+        if (root->left == NULL) {
+            return root->right;
+        }
+        if (root->right == NULL) {
+            return root->left;
+        }
+
+        // case-3: root has 2 child nodes
+        int smallest_in_right = getSmallest(root->right);
+        root->data = smallest_in_right;
+        root->right = deleteNode(root->right, smallest_in_right);
+
+    } else if (x > root->data) {
+        root->right = deleteNode(root->right, x);
+    } else {
+        root->left = deleteNode(root->left, x);
+    }
+
+    return root;
+}
+
 int main() {
 
     Node *root = new Node(5);
@@ -96,5 +151,16 @@ int main() {
     cout << searchIterative(root, 9) << endl;
 
     cout << search(root, 6) << endl;
-    cout << searchIterative(root, 6);
-}
+    cout << searchIterative(root, 6) << endl;
+
+    deleteNode(root, 7);
+    cout << search(root, 7) << endl;
+
+    deleteNode(root, 8);
+    cout << search(root, 8) << endl;
+
+    deleteNode(root, 5);
+    cout << search(root, 5) << endl;
+
+    deleteNode(root, 100);
+} 
