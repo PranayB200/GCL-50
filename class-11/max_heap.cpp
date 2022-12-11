@@ -1,6 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+/*
+class MaxHeap {
+    // function to insert
+    // function to delete
+    // function to get the max element
+}
+*/
+
 /**
  * TC: O(H) = O(log(n))
  * Aux space: O(H) = O(log(n))
@@ -30,9 +39,49 @@ void top_down_heapify(vector<int> &heap, int index) {
     top_down_heapify(heap, largest);
 }
 
+/**
+ * TC: O(H) = O(log(n))
+ * Aux space: O(H) = O(log(n))
+ * SC: O(n)
+*/
 void delete_from_heap(vector<int> &heap) {
 
+    if (heap.size() == 0) {
+        return;
+    }
+
+    heap[0] = heap[heap.size() - 1];
+    heap.pop_back();
+    top_down_heapify(heap, 0);
 }
+
+
+
+/**
+ * TC: O(H) = O(log(n))
+ * Aux space: O(H) = O(log(n))
+ * SC: O(n)
+*/
+void bottom_up_heapify(vector<int> &heap, int index) {
+
+    int parent_index = (index - 1) / 2;
+
+    if (heap[index] > heap[parent_index]) {
+        swap(heap[index], heap[parent_index]);
+        bottom_up_heapify(heap, parent_index);
+    }
+}
+
+/**
+ * TC: O(H) = O(log(n))
+ * Aux space: O(H) = O(log(n))
+ * SC: O(n)
+*/
+void insert_in_heap(vector<int> &heap, int value) {
+    heap.push_back(value);
+    bottom_up_heapify(heap, heap.size() - 1);
+}
+
 
 int main() {
 
@@ -42,4 +91,13 @@ int main() {
     for (int i : heap) {
         cout << i << " ";
     }
+    cout << endl;
+
+    vector<int> heap2 = {10, 5, 3, 2, 4};
+    delete_from_heap(heap2);
+
+    for (int i : heap2) {
+        cout << i << " ";
+    }
+    cout << endl;
 }
