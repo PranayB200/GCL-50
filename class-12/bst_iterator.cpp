@@ -22,7 +22,7 @@ class BSTIterator {
     private:
     void pushLeft(Node *root, stack<Node*> &s) {
         while (root != NULL) {
-            s.push(root->left);
+            s.push(root);
             root = root->left;
         }
     }
@@ -66,7 +66,7 @@ int main() {
     rt->right = new Node(8);
     rt->left->left = new Node(2);
     rt->right->left = new Node(6);
-    rt->right->right = new Node(6);
+    rt->right->right = new Node(9);
 
     BSTIterator *it = new BSTIterator(rt);
     while (it->hasNext()) {
