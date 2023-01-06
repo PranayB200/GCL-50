@@ -18,7 +18,6 @@ stack<Node*> s;
 
 class BSTIterator {
 
-
     private:
     void pushLeft(Node *root, stack<Node*> &s) {
         while (root != NULL) {
